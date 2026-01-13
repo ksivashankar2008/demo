@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor Dashboard | Parent Communication</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:#f3f4f6;
+}
+header{
+  position:fixed;top:0;width:100%;height:70px;
+  background:#fff;border-bottom:1px solid #e5e7eb;
+  box-shadow:0 2px 4px rgba(0,0,0,.05);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;z-index:50;
+}
+header img{height:50px}
+header select{
+  padding:8px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;
+}
+main{
+  flex-grow:1;padding-top:90px;padding-left:16px;padding-right:16px;
+  display:flex;justify-content:center;
+}
+.content-section{
+  width:100%;max-width:800px;background:#fff;border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);padding:24px;
+}
+.content-section h2{
+  font-size:20px;font-weight:600;color:#1e3a8a;margin-bottom:16px;
+}
+.content-section p{font-size:14px;color:#4b5563;margin-bottom:16px}
+form{display:flex;flex-direction:column;gap:12px}
+form .input-row{display:flex;flex-direction:column;gap:8px}
+@media(min-width:640px){form .input-row{flex-direction:row}}
+form input{
+  padding:8px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;width:100%;
+}
+form button{
+  padding:10px 24px;border:none;border-radius:8px;
+  font-size:14px;color:#fff;background:#2563eb;cursor:pointer;
+}
+table{
+  width:100%;border-collapse:collapse;font-size:14px;margin-top:16px;
+}
+thead{background:#bfdbfe}
+th,td{border:1px solid #e5e7eb;padding:10px;text-align:left}
+.call-btn{
+  background:#22c55e;color:#fff;padding:4px 8px;border-radius:6px;
+  font-size:12px;text-decoration:none;margin-right:4px;
+}
+.edit-btn{
+  background:#f59e0b;color:#fff;padding:4px 8px;border-radius:6px;
+  font-size:12px;border:none;cursor:pointer;margin-right:4px;
+}
+td button.delete{
+  background:#ef4444;color:#fff;padding:4px 8px;border:none;
+  border-radius:6px;font-size:12px;cursor:pointer;
+}
+footer{
+  background:#111827;color:#d1d5db;font-size:13px;
+  text-align:center;padding:12px;margin-top:auto;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="rit-logo-wide-1.png" alt="RIT Logo">
+  <select>
+    <option disabled selected>Dashboard Options</option>
+    <option>Mentor Dashboard</option>
+    <option>Parent Communication</option>
+  </select>
+</header>
+
+<main>
+<section class="content-section">
+<h2>Parent Communication</h2>
+<p>Maintain parent contact details for direct communication.</p>
+
+<form id="parentForm">
+  <div class="input-row">
+    <input type="text" placeholder="Student Name" required>
+    <input type="text" placeholder="Parent Name" required>
+  </div>
+  <div class="input-row">
+    <input type="email" placeholder="Parent Email" required>
+    <input type="tel" placeholder="Primary Mobile Number" required>
+  </div>
+  <div class="input-row">
+    <input type="tel" placeholder="Alternative Mobile Number">
+  </div>
+  <button type="submit">Save Contact</button>
+</form>
+
+<table>
+<thead>
+<tr>
+  <th>Student</th>
+  <th>Parent</th>
+  <th>Email</th>
+  <th>Primary No</th>
+  <th>Alt No</th>
+  <th>Action</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</section>
+</main>
+
+<footer>© 2025 Ramco Institute of Technology | Mentor Management System</footer>
+
+<script>
+const form = document.getElementById('parentForm');
+const tableBody = document.getElementById('tableBody');
+let contacts = [];
+let editIndex = null;
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const inputs = form.querySelectorAll('input');
+  const data = {
+    student: inputs[0].value.trim(),
+    parent: inputs[1].value.trim(),
+    email: inputs[2].value.trim(),
+    primary: inputs[3].value.trim(),
+    alt: inputs[4].value.trim()
+  };
+
+  if(editIndex === null){
+    contacts.push(data);
+  } else {
+    contacts[editIndex] = data;
+    editIndex = null;
+  }
+
+  inputs.forEach(i => i.value = '');
+  renderTable();
+});
+
+function renderTable(){
+  tableBody.innerHTML = '';
+  contacts.forEach((c,i)=>{
+    tableBody.innerHTML += `
+      <tr>
+        <td>${c.student}</td>
+        <td>${c.parent}</td>
+        <td>${c.email}</td>
+        <td>${c.primary}</td>
+        <td>${c.alt || '-'}</td>
+        <td>
+          <a href="tel:${c.primary}" class="call-btn">📞1</a>
+          ${c.alt ? `<a href="tel:${c.alt}" class="call-btn">📞2</a>` : ''}
+          <button class="edit-btn" onclick="editRow(${i})">Edit</button>
+          <button class="delete" onclick="deleteRow(${i})">Delete</button>
+        </td>
+      </tr>`;
+  });
+}
+
+function editRow(i){
+  const inputs = form.querySelectorAll('input');
+  const c = contacts[i];
+  inputs[0].value = c.student;
+  inputs[1].value = c.parent;
+  inputs[2].value = c.email;
+  inputs[3].value = c.primary;
+  inputs[4].value = c.alt;
+  editIndex = i;
+}
+
+function deleteRow(i){
+  contacts.splice(i,1);
+  renderTable();
+}
+</script>
+
+</body>
+</html>
