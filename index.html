@@ -7,6 +7,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 body{
   font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
   min-height:100vh;
@@ -14,78 +15,227 @@ body{
   flex-direction:column;
   background:#f3f4f6;
 }
+
 header{
-  position:fixed;top:0;width:100%;height:70px;
-  background:#fff;border-bottom:1px solid #e5e7eb;
+  position:fixed;
+  top:0;
+  width:100%;
+  height:70px;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
   box-shadow:0 2px 4px rgba(0,0,0,.05);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+  z-index:50;
 }
-header img{height:50px}
-header select{
-  padding:8px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;
-}
+
+header img{ height:45px; }
+@media(min-width:640px){ header img{ height:60px; } }
 main{
-  flex-grow:1;padding-top:90px;padding-left:16px;padding-right:16px;
-  display:flex;justify-content:center;
+  flex-grow:1;
+  padding-top:90px;
+  padding-left:16px;
+  padding-right:16px;
+  display:flex;
+  justify-content:center;
 }
+
 .content-section{
-  width:100%;max-width:800px;background:#fff;border-radius:12px;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);padding:24px;
+  width:100%;
+  max-width:800px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  padding:24px;
 }
+
 .content-section h2{
-  font-size:20px;font-weight:600;color:#1e3a8a;margin-bottom:16px;
+  font-size:20px;
+  font-weight:600;
+  color:#1e3a8a;
+  margin-bottom:16px;
 }
-.content-section p{font-size:14px;color:#4b5563;margin-bottom:16px}
-form{display:flex;flex-direction:column;gap:12px}
-form .input-row{display:flex;flex-direction:column;gap:8px}
-@media(min-width:640px){form .input-row{flex-direction:row}}
+
+.content-section p{
+  font-size:14px;
+  color:#4b5563;
+  margin-bottom:16px;
+}
+
+form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+form .input-row{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+@media(min-width:640px){
+  form .input-row{flex-direction:row}
+}
+
 form input{
-  padding:8px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;width:100%;
+  padding:8px;
+  border:1px solid #d1d5db;
+  border-radius:6px;
+  font-size:14px;
+  width:100%;
 }
+
 form button{
-  padding:10px 24px;border:none;border-radius:8px;
-  font-size:14px;color:#fff;background:#2563eb;cursor:pointer;
+  padding:10px 24px;
+  border:none;
+  border-radius:8px;
+  font-size:14px;
+  color:#fff;
+  background:#2563eb;
+  cursor:pointer;
 }
+
+/* SEARCH BAR – SAME UI STYLE */
+#searchInput{
+  width:100%;
+  padding:8px;
+  margin-bottom:16px;
+  border:1px solid #d1d5db;
+  border-radius:6px;
+  font-size:14px;
+}
+
+/* TABLE */
 table{
-  width:100%;border-collapse:collapse;font-size:14px;margin-top:16px;
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  margin-top:16px;
 }
+
 thead{background:#bfdbfe}
-th,td{border:1px solid #e5e7eb;padding:10px;text-align:left}
+
+th,td{
+  border:1px solid #e5e7eb;
+  padding:10px;
+  text-align:left;
+}
+
 .call-btn{
-  background:#22c55e;color:#fff;padding:4px 8px;border-radius:6px;
-  font-size:12px;text-decoration:none;margin-right:4px;
+  background:#22c55e;
+  color:#fff;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  text-decoration:none;
+  margin-right:4px;
 }
+
 .edit-btn{
-  background:#f59e0b;color:#fff;padding:4px 8px;border-radius:6px;
-  font-size:12px;border:none;cursor:pointer;margin-right:4px;
+  background:#f59e0b;
+  color:#fff;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  border:none;
+  cursor:pointer;
+  margin-right:4px;
 }
+
 td button.delete{
-  background:#ef4444;color:#fff;padding:4px 8px;border:none;
-  border-radius:6px;font-size:12px;cursor:pointer;
+  background:#ef4444;
+  color:#fff;
+  padding:4px 8px;
+  border:none;
+  border-radius:6px;
+  font-size:12px;
+  cursor:pointer;
 }
+
+/* MOBILE CARD VIEW */
+@media (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display:block;
+    width:100%;
+  }
+
+  thead{display:none}
+
+  tbody tr{
+    background:#f9fafb;
+    margin-bottom:16px;
+    border-radius:12px;
+    padding:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  }
+
+  tbody td{
+    border:none;
+    padding:6px 0;
+    display:flex;
+    justify-content:space-between;
+  }
+
+  tbody td::before{
+    content:attr(data-label);
+    font-weight:600;
+    color:#374151;
+  }
+
+  tbody td:last-child{
+    justify-content:flex-start;
+    gap:6px;
+    margin-top:8px;
+  }
+}
+
 footer{
-  background:#111827;color:#d1d5db;font-size:13px;
-  text-align:center;padding:12px;margin-top:auto;
+  background:#111827;
+  color:#d1d5db;
+  font-size:13px;
+  text-align:center;
+  padding:12px;
+  margin-top:auto;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <img src="rit-logo-wide-1.png" alt="RIT Logo">
-  <select>
-    <option disabled selected>Dashboard Options</option>
-    <option>Mentor Dashboard</option>
-    <option>Parent Communication</option>
-  </select>
-</header>
+  <header>
+    <!-- LOGO -->
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="logo-rit.png" alt="RIT Logo" style="height:45px;">
+     
+    </div>
+  
+    <!-- NAVIGATION SELECT -->
+    <select id="navSelect">
+      <option value="">Navigate</option>
+      <option value="mentordashboard">Mentor Dashboard</option>
+      <option value="menteeinfo">Mentee Information</option>
+      <option value="academictracking">Academic Tracking</option>
+      <option value="attendance">Attendance</option>
+      <option value="performance">Performance Analysis</option>
+      <option value="warning">Early Warning System</option>
+      <option value="parentcomm" selected>Parent Communication</option>
+      <option value="classroom">Classroom Updates</option>
+      <option value="events">Events & Activities</option>
+      <option value="feedback">Feedback & Support</option>
+    </select>
+  </header>
+  
 
 <main>
 <section class="content-section">
 <h2>Parent Communication</h2>
 <p>Maintain parent contact details for direct communication.</p>
+
+<!-- SEARCH BAR -->
+<input type="text" id="searchInput" placeholder="Search by student, parent or mobile number">
 
 <form id="parentForm">
   <div class="input-row">
@@ -118,17 +268,22 @@ footer{
 </section>
 </main>
 
-<footer>© 2025 Ramco Institute of Technology | Mentor Management System</footer>
+<footer>
+© 2025 Ramco Institute of Technology | Mentor Management System
+</footer>
 
 <script>
 const form = document.getElementById('parentForm');
 const tableBody = document.getElementById('tableBody');
+const searchInput = document.getElementById('searchInput');
+
 let contacts = [];
 let editIndex = null;
 
 form.addEventListener('submit', e => {
   e.preventDefault();
   const inputs = form.querySelectorAll('input');
+
   const data = {
     student: inputs[0].value.trim(),
     parent: inputs[1].value.trim(),
@@ -148,24 +303,35 @@ form.addEventListener('submit', e => {
   renderTable();
 });
 
+searchInput.addEventListener('input', renderTable);
+
 function renderTable(){
+  const keyword = searchInput.value.toLowerCase();
   tableBody.innerHTML = '';
-  contacts.forEach((c,i)=>{
-    tableBody.innerHTML += `
-      <tr>
-        <td>${c.student}</td>
-        <td>${c.parent}</td>
-        <td>${c.email}</td>
-        <td>${c.primary}</td>
-        <td>${c.alt || '-'}</td>
-        <td>
-          <a href="tel:${c.primary}" class="call-btn">📞1</a>
-          ${c.alt ? `<a href="tel:${c.alt}" class="call-btn">📞2</a>` : ''}
-          <button class="edit-btn" onclick="editRow(${i})">Edit</button>
-          <button class="delete" onclick="deleteRow(${i})">Delete</button>
-        </td>
-      </tr>`;
-  });
+
+  contacts
+    .filter(c =>
+      c.student.toLowerCase().includes(keyword) ||
+      c.parent.toLowerCase().includes(keyword) ||
+      c.primary.includes(keyword) ||
+      (c.alt && c.alt.includes(keyword))
+    )
+    .forEach((c,i)=>{
+      tableBody.innerHTML += `
+        <tr>
+          <td data-label="Student">${c.student}</td>
+          <td data-label="Parent">${c.parent}</td>
+          <td data-label="Email">${c.email}</td>
+          <td data-label="Primary No">${c.primary}</td>
+          <td data-label="Alt No">${c.alt || '-'}</td>
+          <td data-label="Action">
+            <a href="tel:${c.primary}" class="call-btn">📞1</a>
+            ${c.alt ? `<a href="tel:${c.alt}" class="call-btn">📞2</a>` : ''}
+            <button class="edit-btn" onclick="editRow(${i})">Edit</button>
+            <button class="delete" onclick="deleteRow(${i})">Delete</button>
+          </td>
+        </tr>`;
+    });
 }
 
 function editRow(i){
@@ -183,6 +349,28 @@ function deleteRow(i){
   contacts.splice(i,1);
   renderTable();
 }
+document.addEventListener("change", function (e) {
+  if (e.target && e.target.id === "navSelect") {
+    const routes = {
+      mentordashboard: "mentor-access.html",
+      menteeinfo: "menteeinfo.html",
+      academictracking: "academic-tracking.html",
+      attendance: "attendance.html",
+      aboutmentor: "mentor-access.html",
+      performance: "performance-analysis.html",
+      warning: "early-warning-system.html",
+      parentcomm: "parent-communication.html",
+      classroom: "classroom-updates.html",
+      events: "events&activities.html",
+      feedback: "feedback&support.html"
+    };
+
+    const targetPage = routes[e.target.value];
+    if (targetPage) {
+      window.location.href = targetPage;
+    }
+  }
+});
 </script>
 
 </body>
