@@ -3,374 +3,315 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mentor Dashboard | Parent Communication</title>
+<title>Parent Communication</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 
-body{
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  background:#f3f4f6;
+/* BACKGROUND */
+.bg-fixed{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:-1;
 }
 
-header{
+/* HEADER */
+.header{
   position:fixed;
   top:0;
   width:100%;
   height:70px;
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
-  box-shadow:0 2px 4px rgba(0,0,0,.05);
+  padding:0 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 24px;
-  z-index:50;
+  background:#fff;
+  z-index:100;
+}
+.header img{height:45px}
+
+/* DESKTOP DROPDOWN */
+.nav-select{
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid #cbd5e1;
+  font-weight:600;
+  color:#1e3a8a;
+}
+@media(max-width:768px){.nav-select{display:none}}
+
+/* THREE DOT MENU */
+.menu-btn{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+}
+@media(max-width:768px){.menu-btn{display:block}}
+
+/* MOBILE MENU */
+.mobile-menu{
+  position:fixed;
+  top:80px;
+  right:16px;
+  width:260px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
+  padding:12px;
+  display:none;
+  z-index:200;
+}
+.mobile-menu button{
+  width:100%;
+  padding:10px;
+  margin-bottom:6px;
+  border:none;
+  border-radius:8px;
+  background:#f9fafb;
+  color:#2563eb;
+  text-align:left;
 }
 
-header img{ height:45px; }
-@media(min-width:640px){ header img{ height:60px; } }
+/* MAIN */
 main{
-  flex-grow:1;
-  padding-top:90px;
-  padding-left:16px;
-  padding-right:16px;
+  margin-top:90px;
+  padding:16px;
   display:flex;
   justify-content:center;
 }
-
-.content-section{
+.section{
   width:100%;
-  max-width:800px;
+  max-width:900px;
   background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+h2{color:#1e3a8a;margin-bottom:8px}
+p{color:#4b5563;margin-bottom:16px}
+
+/* SEARCH */
+#search{
+  width:100%;
+  padding:10px;
+  border:2px solid #2563eb;
   border-radius:12px;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-  padding:24px;
-}
-
-.content-section h2{
-  font-size:20px;
-  font-weight:600;
-  color:#1e3a8a;
   margin-bottom:16px;
 }
 
-.content-section p{
-  font-size:14px;
-  color:#4b5563;
-  margin-bottom:16px;
-}
-
-form{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-form .input-row{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-@media(min-width:640px){
-  form .input-row{flex-direction:row}
-}
-
-form input{
+/* FORM */
+form{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input{
   padding:8px;
   border:1px solid #d1d5db;
   border-radius:6px;
-  font-size:14px;
   width:100%;
 }
-
-form button{
-  padding:10px 24px;
+button.save{
+  background:#2563eb;
+  color:#fff;
+  padding:10px;
   border:none;
   border-radius:8px;
-  font-size:14px;
-  color:#fff;
-  background:#2563eb;
   cursor:pointer;
-}
-
-/* SEARCH BAR – SAME UI STYLE */
-#searchInput{
-  width:100%;
-  padding:8px;
-  margin-bottom:16px;
-  border:1px solid #d1d5db;
-  border-radius:6px;
-  font-size:14px;
 }
 
 /* TABLE */
 table{
   width:100%;
   border-collapse:collapse;
-  font-size:14px;
   margin-top:16px;
 }
-
-thead{background:#bfdbfe}
-
 th,td{
   border:1px solid #e5e7eb;
   padding:10px;
-  text-align:left;
 }
+thead{background:#bfdbfe}
 
-.call-btn{
-  background:#22c55e;
-  color:#fff;
-  padding:4px 8px;
+/* ACTIONS */
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.actions a, .actions button{
+  padding:6px 10px;
   border-radius:6px;
   font-size:12px;
+  color:#fff;
+  border:none;
+  cursor:pointer;
   text-decoration:none;
-  margin-right:4px;
 }
+.call1{background:#16a34a}
+.call2{background:#22c55e}
+.mail{background:#2563eb}
+.remove{background:#dc2626}
+.disabled{opacity:.4;pointer-events:none}
 
-.edit-btn{
-  background:#f59e0b;
-  color:#fff;
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:12px;
-  border:none;
-  cursor:pointer;
-  margin-right:4px;
-}
-
-td button.delete{
-  background:#ef4444;
-  color:#fff;
-  padding:4px 8px;
-  border:none;
-  border-radius:6px;
-  font-size:12px;
-  cursor:pointer;
-}
-
-/* MOBILE CARD VIEW */
-@media (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
-    display:block;
-    width:100%;
-  }
-
+/* MOBILE CARD */
+@media(max-width:768px){
+  table,thead,tbody,th,td,tr{display:block}
   thead{display:none}
-
   tbody tr{
     background:#f9fafb;
-    margin-bottom:16px;
-    border-radius:12px;
+    margin-bottom:14px;
     padding:12px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    border-radius:12px;
   }
-
-  tbody td{
-    border:none;
-    padding:6px 0;
+  td{
     display:flex;
     justify-content:space-between;
+    border:none;
+    padding:6px 0;
   }
-
-  tbody td::before{
+  td::before{
     content:attr(data-label);
     font-weight:600;
-    color:#374151;
   }
-
-  tbody td:last-child{
-    justify-content:flex-start;
-    gap:6px;
-    margin-top:8px;
-  }
-}
-
-footer{
-  background:#111827;
-  color:#d1d5db;
-  font-size:13px;
-  text-align:center;
-  padding:12px;
-  margin-top:auto;
 }
 </style>
 </head>
 
 <body>
 
-  <header>
-    <!-- LOGO -->
-    <div style="display:flex;align-items:center;gap:12px;">
-      <img src="rit-logo-wide-1.png" alt="RIT Logo" style="height:45px;">
-     
-    </div>
+  <img src="RIT-main-building.jpg" alt="Background" class="bg-fixed">
+  <div class="overlay"></div>
   
-    <!-- NAVIGATION SELECT -->
-    <select id="navSelect">
-      <option value="">Navigate</option>
-      <option value="mentordashboard">Mentor Dashboard</option>
-      <option value="menteeinfo">Mentee Information</option>
-      <option value="academictracking">Academic Tracking</option>
-      <option value="attendance">Attendance</option>
-      <option value="performance">Performance Analysis</option>
-      <option value="warning">Early Warning System</option>
-      <option value="parentcomm" selected>Parent Communication</option>
-      <option value="classroom">Classroom Updates</option>
-      <option value="events">Events & Activities</option>
-      <option value="feedback">Feedback & Support</option>
+  <!-- HEADER -->
+  <header class="header">
+    <img src="rit-logo-wide-1.png" alt="RIT Logo">
+  
+    <!-- DESKTOP DROPDOWN -->
+    <select id="navSelect" class="nav-select">
+      <option selected disabled>Dashboard Options</option>
+      <option value="mentor-dashboard.html">Mentor Dashboard</option>
+      <option value="mentee-info.html">Mentee Information</option>
+      <option value="timetable.html">Time Table</option>
+      <option value="about-mentor.html">About Mentor</option>
+      <option value="academic-tracking.html">Academic Tracking</option>
+      <option value="attendance.html">Attendance</option>
+      <option value="performance-analysis.html">Performance Analysis</option>
+      <option value="warning-system.html">Warning System</option>
+      <option value="parent-communication.html">Parent Communication</option>
+      <option value="classroom-updates.html">Classroom Updates</option>
+      <option value="events-activities.html">Event & Activities</option>
+      <option value="feedback-support.html">Feedback & Support</option>
     </select>
+  
+    <!-- THREE DOT MENU -->
+    <div class="menu-btn" onclick="toggleMenu()">⋮</div>
   </header>
   
-
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <h4>Dashboard Options</h4>
+    <button onclick="go('mentor-dashboard.html')">Mentor Dashboard</button>
+    <button onclick="go('mentee-info.html')">Mentee Information</button>
+    <button onclick="go('timetable.html')">Time Table</button>
+    <button onclick="go('about-mentor.html')">About Mentor</button>
+    <button onclick="go('academic-tracking.html')">Academic Tracking</button>
+    <button onclick="go('attendance.html')">Attendance</button>
+    <button onclick="go('performance-analysis.html')">Performance Analysis</button>
+    <button onclick="go('warning-system.html')">Warning System</button>
+    <button onclick="go('parent-communication.html')">Parent Communication</button>
+    <button onclick="go('classroom-updates.html')">Classroom Updates</button>
+    <button onclick="go('events-activities.html')">Event & Activities</button>
+    <button onclick="go('feedback-support.html')">Feedback & Support</button>
+  </div>
+  
 <main>
-<section class="content-section">
+<section class="section">
 <h2>Parent Communication</h2>
-<p>Maintain parent contact details for direct communication.</p>
+<p>Maintain parent contact details</p>
 
-<!-- SEARCH BAR -->
-<input type="text" id="searchInput" placeholder="Search by student, parent or mobile number">
+<input id="search" placeholder="Search by name or number">
 
-<form id="parentForm">
-  <div class="input-row">
-    <input type="text" placeholder="Student Name" required>
-    <input type="text" placeholder="Parent Name" required>
+<form id="form">
+  <div class="row">
+    <input placeholder="Student Name" required>
+    <input placeholder="Parent Name" required>
   </div>
-  <div class="input-row">
-    <input type="email" placeholder="Parent Email" required>
-    <input type="tel" placeholder="Primary Mobile Number" required>
+  <div class="row">
+    <input placeholder="Email" required>
+    <input placeholder="Primary Mobile" required>
   </div>
-  <div class="input-row">
-    <input type="tel" placeholder="Alternative Mobile Number">
-  </div>
-  <button type="submit">Save Contact</button>
+  <input placeholder="Alternate Mobile">
+  <button class="save">Save Contact</button>
 </form>
 
 <table>
 <thead>
 <tr>
-  <th>Student</th>
-  <th>Parent</th>
-  <th>Email</th>
-  <th>Primary No</th>
-  <th>Alt No</th>
-  <th>Action</th>
+  <th>Student</th><th>Parent</th><th>Email</th>
+  <th>Primary</th><th>Alt</th><th>Actions</th>
 </tr>
 </thead>
-<tbody id="tableBody"></tbody>
+<tbody id="tbody"></tbody>
 </table>
 </section>
 </main>
 
-<footer>
-© 2025 Ramco Institute of Technology | Mentor Management System
-</footer>
-
 <script>
-const form = document.getElementById('parentForm');
-const tableBody = document.getElementById('tableBody');
-const searchInput = document.getElementById('searchInput');
+const form=document.getElementById("form");
+const tbody=document.getElementById("tbody");
+const search=document.getElementById("search");
+let data=[];
 
-let contacts = [];
-let editIndex = null;
-
-form.addEventListener('submit', e => {
+form.onsubmit=e=>{
   e.preventDefault();
-  const inputs = form.querySelectorAll('input');
+  const i=form.querySelectorAll("input");
+  data.push({s:i[0].value,p:i[1].value,e:i[2].value,m:i[3].value,a:i[4].value});
+  i.forEach(x=>x.value="");
+  render();
+};
 
-  const data = {
-    student: inputs[0].value.trim(),
-    parent: inputs[1].value.trim(),
-    email: inputs[2].value.trim(),
-    primary: inputs[3].value.trim(),
-    alt: inputs[4].value.trim()
-  };
+search.oninput=render;
 
-  if(editIndex === null){
-    contacts.push(data);
-  } else {
-    contacts[editIndex] = data;
-    editIndex = null;
-  }
-
-  inputs.forEach(i => i.value = '');
-  renderTable();
-});
-
-searchInput.addEventListener('input', renderTable);
-
-function renderTable(){
-  const keyword = searchInput.value.toLowerCase();
-  tableBody.innerHTML = '';
-
-  contacts
-    .filter(c =>
-      c.student.toLowerCase().includes(keyword) ||
-      c.parent.toLowerCase().includes(keyword) ||
-      c.primary.includes(keyword) ||
-      (c.alt && c.alt.includes(keyword))
-    )
-    .forEach((c,i)=>{
-      tableBody.innerHTML += `
-        <tr>
-          <td data-label="Student">${c.student}</td>
-          <td data-label="Parent">${c.parent}</td>
-          <td data-label="Email">${c.email}</td>
-          <td data-label="Primary No">${c.primary}</td>
-          <td data-label="Alt No">${c.alt || '-'}</td>
-          <td data-label="Action">
-            <a href="tel:${c.primary}" class="call-btn">📞1</a>
-            ${c.alt ? `<a href="tel:${c.alt}" class="call-btn">📞2</a>` : ''}
-            <button class="edit-btn" onclick="editRow(${i})">Edit</button>
-            <button class="delete" onclick="deleteRow(${i})">Delete</button>
-          </td>
-        </tr>`;
-    });
+function removeRow(i){
+  data.splice(i,1);
+  render();
 }
 
-function editRow(i){
-  const inputs = form.querySelectorAll('input');
-  const c = contacts[i];
-  inputs[0].value = c.student;
-  inputs[1].value = c.parent;
-  inputs[2].value = c.email;
-  inputs[3].value = c.primary;
-  inputs[4].value = c.alt;
-  editIndex = i;
+function render(){
+  tbody.innerHTML="";
+  const k=search.value.toLowerCase();
+  data.filter(d=>Object.values(d).some(v=>v.toLowerCase().includes(k)))
+  .forEach((d,i)=>{
+    tbody.innerHTML+=`
+    <tr>
+      <td data-label="Student">${d.s}</td>
+      <td data-label="Parent">${d.p}</td>
+      <td data-label="Email">${d.e}</td>
+      <td data-label="Primary">${d.m}</td>
+      <td data-label="Alt">${d.a||"-"}</td>
+      <td data-label="Actions">
+        <div class="actions">
+          <a class="call1" href="tel:${d.m}">Call 1</a>
+          <a class="call2 ${d.a?'':'disabled'}" href="tel:${d.a}">Call 2</a>
+          <a class="mail" href="mailto:${d.e}">Mail</a>
+          <button class="remove" onclick="removeRow(${i})">Remove</button>
+        </div>
+      </td>
+    </tr>`;
+  });
 }
 
-function deleteRow(i){
-  contacts.splice(i,1);
-  renderTable();
+function toggleMenu(){
+  const m=document.getElementById("mobileMenu");
+  m.style.display=m.style.display==="block"?"none":"block";
 }
-document.addEventListener("change", function (e) {
-  if (e.target && e.target.id === "navSelect") {
-    const routes = {
-      mentordashboard: "mentor-access.html",
-      menteeinfo: "menteeinfo.html",
-      academictracking: "academic-tracking.html",
-      attendance: "attendance.html",
-      aboutmentor: "mentor-access.html",
-      performance: "performance-analysis.html",
-      warning: "early-warning-system.html",
-      parentcomm: "parent-communication.html",
-      classroom: "classroom-updates.html",
-      events: "events&activities.html",
-      feedback: "feedback&support.html"
-    };
-
-    const targetPage = routes[e.target.value];
-    if (targetPage) {
-      window.location.href = targetPage;
-    }
-  }
-});
+function go(p){location.href=p}
 </script>
 
 </body>
