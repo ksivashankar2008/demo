@@ -239,14 +239,16 @@ thead{background:#bfdbfe}
 
 <form id="form">
   <div class="row">
-    <input placeholder="Student Name" required>
-    <input placeholder="Parent Name" required>
+    <input placeholder="Student Name" required type="text">
+    <input placeholder="Parent Name" required type="text">
   </div>
   <div class="row">
-    <input placeholder="Email" required>
-    <input placeholder="Primary Mobile" required>
+    <input placeholder="Email" required type="email">
+    <input type="number" onkeydown="return event.key !== 'e' && event.key !== 'E'" placeholder="Primary Mobile" required>
+
   </div>
-  <input placeholder="Alternate Mobile">
+  <input type="number" onkeydown="return event.key !== 'e' && event.key !== 'E'" placeholder="Alternate Mobile">
+
   <button class="save">Save Contact</button>
 </form>
 
